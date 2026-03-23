@@ -2,1371 +2,1380 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Производство кальцинированной соды</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Производство соды</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0e14;
-    --surface: #111720;
-    --surface2: #171f2e;
-    --border: #1e2d42;
-    --accent: #4af0c4;
-    --accent2: #3b82f6;
-    --accent3: #f59e0b;
-    --text: #e2eaf5;
-    --muted: #6b8099;
-    --danger: #ef4444;
-  }
+:root {
+  --bg: #0a0e14;
+  --surface: #111720;
+  --surface2: #171f2e;
+  --border: #1e2d42;
+  --accent: #4af0c4;
+  --accent2: #3b82f6;
+  --accent3: #f59e0b;
+  --text: #e2eaf5;
+  --muted: #6b8099;
+  --danger: #ef4444;
+  --nav-h: 60px;
+  --top-h: 52px;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
 
-  html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  padding-bottom: calc(var(--nav-h) + 16px);
+  padding-top: var(--top-h);
+}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(74,240,196,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,240,196,0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
 
-  /* ── GRID BACKGROUND ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(74,240,196,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(74,240,196,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+/* ── TOP BAR ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--top-h);
+  background: rgba(10,14,20,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 200;
+}
 
-  /* ── SIDEBAR NAV ── */
-  nav {
+.topbar-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.topbar-formula {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(10,14,20,0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 200;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.bottom-nav::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+  flex: 0 0 auto;
+  min-width: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 8px;
+  text-decoration: none;
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.03em;
+  border-top: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-tab .icon { font-size: 18px; line-height: 1; }
+.nav-tab.active { color: var(--accent); border-top-color: var(--accent); }
+
+/* ── MAIN ── */
+main {
+  position: relative;
+  z-index: 1;
+  padding: 0 0 20px;
+}
+
+/* ── SECTIONS ── */
+section {
+  padding: 28px 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header { margin-bottom: 20px; }
+
+.section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.15;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 24px 16px 28px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: 'Na\2082CO\2083';
+  position: absolute;
+  right: -10px;
+  bottom: -20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 88px;
+  font-weight: 900;
+  color: rgba(74,240,196,0.04);
+  pointer-events: none;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.hero-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1.08;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.hero h1 em { font-style: normal; color: var(--accent); }
+
+.hero-desc {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.75;
+  margin-bottom: 20px;
+}
+
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.pill {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--muted);
+}
+.pill.accent { border-color: var(--accent); color: var(--accent); }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  transition: border-color 0.2s;
+}
+.card:active { border-color: rgba(74,240,196,0.35); }
+
+.card-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+/* ── GRIDS ── */
+.grid-1 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* ── REACTIONS ── */
+.reactions { display: flex; flex-direction: column; gap: 10px; }
+
+.reaction-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: border-color 0.2s;
+}
+.reaction-row:active { border-color: rgba(74,240,196,0.3); }
+.reaction-row.key { border-color: rgba(74,240,196,0.3); background: rgba(74,240,196,0.04); }
+
+.reaction-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.reaction-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--accent);
+  opacity: 0.5;
+  line-height: 1;
+  min-width: 24px;
+}
+.reaction-row.key .reaction-num { opacity: 1; }
+
+.reaction-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-style: italic;
+}
+.reaction-label .key-badge {
+  display: inline-block;
+  background: rgba(74,240,196,0.15);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 9px;
+  font-style: normal;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.1em;
+}
+
+.reaction-eq {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text);
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+/* ── STAGES FLOW ── */
+.stages-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+  margin: 0 -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.stages-scroll::-webkit-scrollbar { display: none; }
+
+.stage-block {
+  flex: 0 0 130px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+  position: relative;
+}
+
+.stage-arrow {
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  font-size: 14px;
+  z-index: 2;
+  background: var(--bg);
+  padding: 2px;
+}
+
+.stage-icon { font-size: 24px; display: block; margin-bottom: 8px; }
+.stage-num { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 5px; }
+.stage-name { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 5px; line-height: 1.3; }
+.stage-rxn { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: 9px;
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top: 6px;
+}
+.badge-main { background: rgba(74,240,196,0.12); color: var(--accent); }
+.badge-aux { background: rgba(59,130,246,0.12); color: var(--accent2); }
+
+/* ── PARAMS ── */
+.params-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.param {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.param-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.param-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.param-value small { font-size: 12px; opacity: 0.6; }
+
+.param-note { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+/* ── INFO BLOCKS ── */
+.info-block {
+  background: var(--surface2);
+  border-left: 3px solid var(--accent);
+  padding: 14px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 16px 0;
+}
+.info-block strong { color: var(--text); }
+
+.warn-block {
+  background: rgba(245,158,11,0.07);
+  border-left: 3px solid var(--accent3);
+  padding: 14px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 16px 0;
+}
+.warn-block strong { color: var(--accent3); }
+
+/* ── RAW TABLE ── */
+.raw-table { width: 100%; border-collapse: collapse; }
+
+.raw-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.raw-table td {
+  padding: 12px 12px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(30,45,66,0.5);
+  vertical-align: top;
+}
+.raw-table tr:last-child td { border-bottom: none; }
+
+.formula {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+/* ── ZONES ── */
+.zones { display: flex; flex-direction: column; gap: 10px; }
+
+.zone-card {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.zone-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+}
+
+.zone-head.top { background: rgba(245,158,11,0.1); }
+.zone-head.mid { background: rgba(239,68,68,0.1); }
+.zone-head.bot { background: rgba(59,130,246,0.1); }
+
+.zone-head-left strong { display: block; font-size: 14px; }
+.zone-head-left small { font-family: 'IBM Plex Mono', monospace; font-size: 10px; }
+.zone-head.top .zone-head-left small { color: var(--accent3); }
+.zone-head.mid .zone-head-left small { color: var(--danger); }
+.zone-head.bot .zone-head-left small { color: var(--accent2); }
+
+.zone-temp-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: right;
+  line-height: 1.2;
+}
+.zone-head.top .zone-temp-val { color: var(--accent3); }
+.zone-head.mid .zone-temp-val { color: var(--danger); }
+.zone-head.bot .zone-temp-val { color: var(--accent2); }
+
+.zone-body {
+  background: var(--surface);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── DEFECTS ── */
+.defect-cards { display: flex; flex-direction: column; gap: 12px; }
+
+.defect-card {
+  border-radius: 10px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+}
+.defect-card.bad { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.25); }
+.defect-card.worse { background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.25); }
+
+.dc-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+.bad .dc-label { color: var(--danger); }
+.worse .dc-label { color: var(--accent3); }
+
+.defect-card h4 { font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 6px; }
+.defect-card p { font-size: 13px; color: var(--muted); }
+
+/* ── FLOW LIST ── */
+.flow-list { display: flex; flex-direction: column; }
+
+.flow-item {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  position: relative;
+}
+
+.flow-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 36px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.flow-dot {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.flow-dot-inner {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(74,240,196,0.15);
+}
+
+.flow-content { padding: 8px 0 22px 12px; }
+.flow-content h4 { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
+.flow-content p { font-size: 12px; color: var(--muted); line-height: 1.65; }
+
+/* ── ACCORDION ── */
+.accordion { display: flex; flex-direction: column; gap: 8px; }
+
+.acc-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.acc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.acc-head-left { display: flex; align-items: center; gap: 12px; }
+
+.acc-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--accent2);
+  background: rgba(59,130,246,0.12);
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.acc-title { font-size: 14px; font-weight: 500; color: var(--text); }
+
+.acc-chevron {
+  color: var(--muted);
+  font-size: 12px;
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.acc-item.open .acc-chevron { transform: rotate(180deg); }
+
+.acc-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.acc-item.open .acc-body { max-height: 300px; }
+
+.acc-body-inner {
+  padding: 14px 16px 16px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.75;
+  border-top: 1px solid var(--border);
+}
+
+/* ── CYCLE STEPS ── */
+.cycle-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.cycle-step:last-child { border-bottom: none; }
+
+.cycle-n {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cycle-text h4 { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.cycle-text p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* ── FOOTER ── */
+footer {
+  margin: 24px 16px 0;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+footer p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-tag { animation: fadeUp 0.5s ease both; }
+.hero h1 { animation: fadeUp 0.5s 0.08s ease both; }
+.hero-desc { animation: fadeUp 0.5s 0.15s ease both; }
+.hero-pills { animation: fadeUp 0.5s 0.22s ease both; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── DESKTOP OVERRIDES ── */
+@media (min-width: 640px) {
+  body { padding-top: 0; padding-bottom: 0; font-size: 15px; }
+  .topbar { display: none; }
+  .bottom-nav { display: none; }
+
+  .sidebar {
+    display: flex !important;
     position: fixed;
     left: 0; top: 0; bottom: 0;
-    width: 220px;
+    width: 210px;
     background: var(--surface);
     border-right: 1px solid var(--border);
-    display: flex;
     flex-direction: column;
-    padding: 32px 0;
+    padding: 28px 0;
     z-index: 100;
     overflow-y: auto;
   }
 
-  .nav-logo {
+  .sidebar-logo {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
     color: var(--accent);
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    padding: 0 24px 28px;
+    padding: 0 20px 22px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     line-height: 1.6;
   }
-
-  .nav-logo span {
+  .sidebar-logo span {
     display: block;
-    font-size: 18px;
     font-family: 'Playfair Display', serif;
+    font-size: 17px;
     color: var(--text);
     letter-spacing: 0;
     margin-top: 4px;
   }
 
-  nav a {
+  .sidebar a {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 9px 24px;
+    gap: 8px;
+    padding: 8px 20px;
     color: var(--muted);
     text-decoration: none;
-    font-size: 12px;
+    font-size: 11px;
     font-family: 'IBM Plex Mono', monospace;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     border-left: 2px solid transparent;
-    transition: all 0.2s;
+    transition: all 0.18s;
   }
-
-  nav a:hover, nav a.active {
+  .sidebar a:hover, .sidebar a.active {
     color: var(--accent);
     border-left-color: var(--accent);
     background: rgba(74,240,196,0.05);
   }
-
-  nav a .num {
-    color: var(--accent);
-    font-size: 10px;
-    opacity: 0.6;
-  }
-
-  /* ── MAIN CONTENT ── */
-  main {
-    margin-left: 220px;
-    padding: 0 60px 80px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 0 60px;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-  }
-
-  .hero::after {
-    content: 'Na₂CO₃';
-    position: absolute;
-    right: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Playfair Display', serif;
-    font-size: 200px;
-    font-weight: 900;
-    color: rgba(74,240,196,0.03);
-    pointer-events: none;
-    line-height: 1;
-  }
-
-  .hero-tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 72px;
-    font-weight: 900;
-    line-height: 1.05;
-    color: var(--text);
-    margin-bottom: 24px;
-    max-width: 700px;
-  }
-
-  .hero h1 em {
-    font-style: normal;
-    color: var(--accent);
-  }
-
-  .hero-desc {
-    max-width: 560px;
-    color: var(--muted);
-    font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 48px;
-  }
-
-  .hero-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .pill {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 6px 16px;
-    font-size: 12px;
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--muted);
-  }
-
-  .pill.accent { border-color: var(--accent); color: var(--accent); }
-
-  /* ── SECTIONS ── */
-  section {
-    padding: 80px 0 40px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 20px;
-    margin-bottom: 48px;
-  }
-
-  .section-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 40px;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  /* ── CARDS ── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 28px 32px;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .card:hover {
-    border-color: rgba(74,240,196,0.3);
-    transform: translateY(-2px);
-  }
-
-  .card-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    margin-bottom: 14px;
-    color: var(--text);
-  }
-
-  .card p {
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.8;
-  }
-
-  /* ── GRIDS ── */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-
-  /* ── REACTIONS TABLE ── */
-  .reactions {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .reaction-row {
-    display: grid;
-    grid-template-columns: 40px 1fr auto;
-    align-items: center;
-    gap: 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px 28px;
-    transition: border-color 0.2s;
-  }
-
-  .reaction-row:hover { border-color: rgba(74,240,196,0.25); }
-
-  .reaction-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--accent);
-    opacity: 0.5;
-  }
-
-  .reaction-eq {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    color: var(--text);
-    letter-spacing: 0.02em;
-  }
-
-  .reaction-label {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: right;
-    white-space: nowrap;
-    font-style: italic;
-  }
-
-  /* ── STAGES FLOW ── */
-  .stages-flow {
-    display: flex;
-    gap: 0;
-    overflow-x: auto;
-    padding-bottom: 20px;
-  }
-
-  .stage-block {
-    flex: 1;
-    min-width: 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stage-inner {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px 16px;
-    text-align: center;
-    position: relative;
-    transition: border-color 0.2s, background 0.2s;
-  }
-
-  .stage-block:not(:last-child) .stage-inner::after {
-    content: '→';
-    position: absolute;
-    right: -18px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--accent);
-    font-size: 18px;
-    z-index: 2;
-  }
-
-  .stage-block:not(:last-child) {
-    margin-right: 20px;
-  }
-
-  .stage-inner:hover {
-    border-color: var(--accent);
-    background: rgba(74,240,196,0.05);
-  }
-
-  .stage-icon {
-    font-size: 28px;
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  .stage-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-    margin-bottom: 6px;
-  }
-
-  .stage-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
-
-  .stage-rxn {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-  }
-
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 100px;
-    font-size: 10px;
-    font-family: 'IBM Plex Mono', monospace;
-    letter-spacing: 0.05em;
-    margin-top: 8px;
-  }
-
-  .badge-main { background: rgba(74,240,196,0.12); color: var(--accent); }
-  .badge-aux { background: rgba(59,130,246,0.12); color: var(--accent2); }
-
-  /* ── ZONES TABLE for furnace ── */
-  .zones {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .zone-row {
-    display: grid;
-    grid-template-columns: 36px 180px 1fr 140px;
-    align-items: stretch;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .zone-row:last-child { border-bottom: none; }
-
-  .zone-indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    writing-mode: vertical-rl;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  .zone-indicator.top { background: rgba(245,158,11,0.15); color: var(--accent3); }
-  .zone-indicator.mid { background: rgba(239,68,68,0.15); color: var(--danger); }
-  .zone-indicator.bot { background: rgba(59,130,246,0.15); color: var(--accent2); }
-
-  .zone-name {
-    padding: 20px 24px;
-    border-right: 1px solid var(--border);
-    border-left: 1px solid var(--border);
-  }
-
-  .zone-name strong {
-    display: block;
-    font-size: 14px;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-
-  .zone-name small {
-    font-size: 12px;
-    color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  .zone-desc {
-    padding: 20px 24px;
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  .zone-temp {
-    padding: 20px 24px;
-    text-align: right;
-    border-left: 1px solid var(--border);
-  }
-
-  .zone-temp .temp-val {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--text);
-    display: block;
-  }
-
-  .zone-temp small {
-    font-size: 11px;
-    color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  /* ── PARAMS ── */
-  .params-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .param {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .param-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  .param-value {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 26px;
-    font-weight: 500;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .param-value small { font-size: 14px; opacity: 0.6; }
-
-  .param-note {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  /* ── INFO BLOCK ── */
-  .info-block {
-    background: var(--surface2);
-    border-left: 3px solid var(--accent);
-    padding: 20px 24px;
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.8;
-    margin: 24px 0;
-  }
-
-  .info-block strong { color: var(--text); }
-
-  .warn-block {
-    background: rgba(245,158,11,0.07);
-    border-left: 3px solid var(--accent3);
-    padding: 20px 24px;
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.8;
-    margin: 16px 0;
-  }
-
-  .warn-block strong { color: var(--accent3); }
-
-  /* ── RAW MATERIALS ── */
-  .raw-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .raw-table th {
-    text-align: left;
-    padding: 12px 20px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .raw-table td {
-    padding: 16px 20px;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(30,45,66,0.5);
-    vertical-align: top;
-  }
-
-  .raw-table tr:last-child td { border-bottom: none; }
-
-  .raw-table tr:hover td { background: rgba(74,240,196,0.03); }
-
-  .raw-table .formula {
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--accent);
-    font-size: 13px;
-  }
-
-  /* ── CYCLE DIAGRAM ── */
-  .cycle-diagram {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 40px;
-    text-align: center;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 2.2;
-    white-space: pre;
-    overflow-x: auto;
-  }
-
-  .cycle-diagram .hi { color: var(--accent); }
-  .cycle-diagram .hi2 { color: var(--accent2); }
-  .cycle-diagram .hi3 { color: var(--accent3); }
-
-  /* ── DEFECTS ── */
-  .defect-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  .defect-card {
-    border-radius: 8px;
-    padding: 24px 28px;
-    border: 1px solid var(--border);
-  }
-
-  .defect-card.bad { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.2); }
-  .defect-card.worse { background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.2); }
-
-  .defect-card .dc-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    margin-bottom: 10px;
-  }
-
-  .defect-card.bad .dc-label { color: var(--danger); }
-  .defect-card.worse .dc-label { color: var(--accent3); }
-
-  .defect-card h4 {
-    font-size: 18px;
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 8px;
-  }
-
-  .defect-card p { font-size: 13px; color: var(--muted); }
-
-  /* ── FLOW LIST ── */
-  .flow-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .flow-item {
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 0;
-    position: relative;
-  }
-
-  .flow-item:not(:last-child)::before {
-    content: '';
-    position: absolute;
-    left: 23px;
-    top: 48px;
-    bottom: 0;
-    width: 1px;
-    background: var(--border);
-  }
-
-  .flow-dot {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .flow-dot-inner {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(74,240,196,0.15);
-  }
-
-  .flow-content {
-    padding: 12px 0 28px 16px;
-  }
-
-  .flow-content h4 {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-
-  .flow-content p {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    margin-left: 220px;
-    border-top: 1px solid var(--border);
-    padding: 32px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  footer p {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-tag, .hero h1, .hero-desc, .hero-pills {
-    animation: fadeUp 0.6s ease both;
-  }
-  .hero h1 { animation-delay: 0.1s; }
-  .hero-desc { animation-delay: 0.2s; }
-  .hero-pills { animation-delay: 0.3s; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    nav { display: none; }
-    main { margin-left: 0; padding: 0 24px 60px; }
-    footer { margin-left: 0; padding: 24px; }
-    .hero h1 { font-size: 44px; }
-    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-    .params-grid { grid-template-columns: 1fr 1fr; }
-    .defect-cards { grid-template-columns: 1fr; }
-    .zone-row { grid-template-columns: 24px 1fr; }
-    .zone-temp, .zone-desc { display: none; }
-  }
+  .sidebar a .snum { font-size: 9px; color: var(--accent); opacity: 0.6; }
+
+  main { margin-left: 210px; padding: 0 48px 60px; }
+
+  section { padding: 64px 0 36px; }
+  .section-title { font-size: 36px; }
+  .hero { padding: 72px 0 52px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+  .hero h1 { font-size: 62px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .params-grid { grid-template-columns: repeat(3, 1fr); }
+  .stages-scroll { margin: 0; padding-left: 0; overflow-x: visible; flex-wrap: wrap; }
+  .stage-block { flex: 1 1 140px; }
+  footer { margin: 24px 0 0; }
+}
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
-<nav>
-  <div class="nav-logo">
-    ТНВ — Химия<br>
-    <span>Производство соды</span>
-  </div>
-  <a href="#intro"><span class="num">01</span> Введение</a>
-  <a href="#raw"><span class="num">02</span> Сырьё</a>
-  <a href="#reactions"><span class="num">03</span> Реакции</a>
-  <a href="#stages"><span class="num">04</span> Стадии</a>
-  <a href="#schema"><span class="num">05</span> Схема цикла</a>
-  <a href="#obzhig"><span class="num">06</span> Обжиг известняка</a>
-  <a href="#furnace"><span class="num">07</span> Шахтная печь</a>
-  <a href="#absorption"><span class="num">08</span> Аммонизация</a>
-  <a href="#carbonization"><span class="num">09</span> Карбонизация</a>
-  <a href="#filtration"><span class="num">10</span> Фильтрация</a>
+<!-- TOP BAR (mobile) -->
+<div class="topbar">
+  <div class="topbar-logo">Производство соды</div>
+  <div class="topbar-formula">Na&#8322;CO&#8323;</div>
+</div>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav">
+  <a class="nav-tab active" href="#intro"><span class="icon">🏠</span>Введение</a>
+  <a class="nav-tab" href="#raw"><span class="icon">🧂</span>Сырьё</a>
+  <a class="nav-tab" href="#reactions"><span class="icon">⚗️</span>Реакции</a>
+  <a class="nav-tab" href="#stages"><span class="icon">📋</span>Стадии</a>
+  <a class="nav-tab" href="#schema"><span class="icon">🔄</span>Схема</a>
+  <a class="nav-tab" href="#obzhig"><span class="icon">🔥</span>Обжиг</a>
+  <a class="nav-tab" href="#furnace"><span class="icon">🏭</span>Печь</a>
+  <a class="nav-tab" href="#absorption"><span class="icon">💨</span>Абсорбция</a>
+  <a class="nav-tab" href="#carbonization"><span class="icon">🌡️</span>Карбониз.</a>
+  <a class="nav-tab" href="#filtration"><span class="icon">🔬</span>Фильтрац.</a>
 </nav>
 
-<!-- MAIN -->
+<!-- SIDEBAR (desktop) -->
+<nav class="sidebar" style="display:none;">
+  <div class="sidebar-logo">ТНВ — Химия<span>Производство соды</span></div>
+  <a href="#intro"><span class="snum">01</span> Введение</a>
+  <a href="#raw"><span class="snum">02</span> Сырьё</a>
+  <a href="#reactions"><span class="snum">03</span> Реакции</a>
+  <a href="#stages"><span class="snum">04</span> Стадии</a>
+  <a href="#schema"><span class="snum">05</span> Схема цикла</a>
+  <a href="#obzhig"><span class="snum">06</span> Обжиг известняка</a>
+  <a href="#furnace"><span class="snum">07</span> Шахтная печь</a>
+  <a href="#absorption"><span class="snum">08</span> Аммонизация</a>
+  <a href="#carbonization"><span class="snum">09</span> Карбонизация</a>
+  <a href="#filtration"><span class="snum">10</span> Фильтрация</a>
+</nav>
+
 <main>
 
-  <!-- HERO -->
-  <section class="hero" id="intro">
-    <div class="hero-tag">// ТНВ · аммиачный способ</div>
-    <h1>Производство<br><em>кальцинированной</em><br>соды</h1>
-    <p class="hero-desc">
-      Карбонат натрия Na₂CO₃ получают аммиачным способом — сложным замкнутым циклом, в котором аммиак регенерируется, а CO₂ используется повторно.
-    </p>
-    <div class="hero-pills">
-      <span class="pill accent">Na₂CO₃</span>
-      <span class="pill accent">NaHCO₃</span>
-      <span class="pill">Аммиачный способ</span>
-      <span class="pill">Замкнутый цикл</span>
-      <span class="pill">5 основных реакций</span>
-      <span class="pill">4 основные стадии</span>
+<!-- HERO -->
+<section class="hero" id="intro">
+  <div class="hero-tag">// ТНВ · аммиачный способ</div>
+  <h1>Производство<br><em>кальцинированной</em><br>соды</h1>
+  <p class="hero-desc">Карбонат натрия Na&#8322;CO&#8323; получают аммиачным способом — замкнутый цикл, в котором NH&#8323; регенерируется, а CO&#8322; используется повторно.</p>
+  <div class="hero-pills">
+    <span class="pill accent">Na&#8322;CO&#8323;</span>
+    <span class="pill accent">NaHCO&#8323;</span>
+    <span class="pill">Аммиачный способ</span>
+    <span class="pill">Замкнутый цикл</span>
+    <span class="pill">5 реакций</span>
+    <span class="pill">4 основные стадии</span>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Na&#8322;CO&#8323;</div>
+      <h3>Кальцинированная сода</h3>
+      <p>Бесцветные кристаллы, гигроскопична. Стекло, мыло, целлюлоза, нефтепродукты.</p>
     </div>
-
-    <div style="margin-top:56px; display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:600px;">
-      <div class="card">
-        <div class="card-title">Na₂CO₃</div>
-        <h3>Кальцинированная сода</h3>
-        <p>Бесцветные кристаллы, гигроскопична. Применяется в производстве стекла, мыла, варке целлюлозы, очистке нефтепродуктов.</p>
-      </div>
-      <div class="card">
-        <div class="card-title">NaHCO₃</div>
-        <h3>Питьевая сода</h3>
-        <p>Хорошо растворима в воде. Применяется в хлебопечении, производстве напитков, медицине и огнетушащих составах.</p>
-      </div>
+    <div class="card">
+      <div class="card-title">NaHCO&#8323;</div>
+      <h3>Питьевая сода</h3>
+      <p>Хорошо растворима. Хлебопечение, напитки, медицина, огнетушащие составы.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- RAW MATERIALS -->
-  <section id="raw">
-    <div class="section-header">
-      <span class="section-num">// 02</span>
-      <h2 class="section-title">Сырьё</h2>
-    </div>
+<!-- RAW -->
+<section id="raw">
+  <div class="section-header">
+    <span class="section-num">// 02</span>
+    <h2 class="section-title">Сырьё</h2>
+  </div>
+  <table class="raw-table">
+    <thead>
+      <tr>
+        <th>Тип</th>
+        <th>Материал</th>
+        <th>Формула</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-main">Осн.</span></td>
+        <td>Мел / известняк</td>
+        <td class="formula">CaCO&#8323;</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-main">Осн.</span></td>
+        <td>Рассол NaCl<br><span style="font-size:11px;color:var(--muted)">305–310 г/л</span></td>
+        <td class="formula">NaCl(водн.)</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-aux">Всп.</span></td>
+        <td>Аммиак<br><span style="font-size:11px;color:var(--muted)">Регенерируется</span></td>
+        <td class="formula">NH&#8323;</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-aux">Всп.</span></td>
+        <td>Вода, пар, э/э</td>
+        <td class="formula">H&#8322;O</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="info-block">
+    <strong>Очистка рассола.</strong> Исходный рассол содержит Ca&#178;&#8314; и Mg&#178;&#8314;. Удаляют обработкой Na&#8322;CO&#8323; и Ca(OH)&#8322; (реакции 6, 7). Температура ~17°C.
+  </div>
+</section>
 
-    <table class="raw-table">
-      <thead>
-        <tr>
-          <th>Тип</th>
-          <th>Материал</th>
-          <th>Формула</th>
-          <th>Примечание</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="badge badge-main">Основное</span></td>
-          <td>Карбонатное сырьё<br><small style="color:var(--muted)">Мел или известняк</small></td>
-          <td class="formula">CaCO₃</td>
-          <td style="font-size:13px; color:var(--muted)">Источник CO₂ и CaO</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-main">Основное</span></td>
-          <td>Рассол поваренной соли</td>
-          <td class="formula">NaCl (водн.)</td>
-          <td style="font-size:13px; color:var(--muted)">Концентрация 305–310 г/л</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-aux">Вспомог.</span></td>
-          <td>Аммиак</td>
-          <td class="formula">NH₃</td>
-          <td style="font-size:13px; color:var(--muted)">Регенерируется в цикле</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-aux">Вспомог.</span></td>
-          <td>Вода, пар, электроэнергия</td>
-          <td class="formula">H₂O</td>
-          <td style="font-size:13px; color:var(--muted)">Технологические нужды</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="info-block" style="margin-top:28px;">
-      <strong>Очистка рассола.</strong> Исходный рассол содержит ионы Ca²⁺ и Mg²⁺, которые мешают процессу. Их удаляют обработкой Na₂CO₃ и Ca(OH)₂ по реакциям (6) и (7). Температура очистки ~17°C.
-    </div>
-  </section>
-
-  <!-- REACTIONS -->
-  <section id="reactions">
-    <div class="section-header">
-      <span class="section-num">// 03</span>
-      <h2 class="section-title">Основные реакции</h2>
-    </div>
-
-    <div class="reactions">
-      <div class="reaction-row">
+<!-- REACTIONS -->
+<section id="reactions">
+  <div class="section-header">
+    <span class="section-num">// 03</span>
+    <h2 class="section-title">Основные реакции</h2>
+  </div>
+  <div class="reactions">
+    <div class="reaction-row">
+      <div class="reaction-header">
         <div class="reaction-num">1</div>
-        <div>
-          <div class="reaction-eq">CaCO₃ → CaO + CO₂ − Q</div>
-        </div>
-        <div class="reaction-label">Обжиг известняка<br><small style="color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;">эндотермическая</small></div>
+        <div class="reaction-label">Обжиг известняка · <em>эндотерм.</em></div>
       </div>
-      <div class="reaction-row">
+      <div class="reaction-eq">CaCO&#8323; &#8594; CaO + CO&#8322; &#8722; Q</div>
+    </div>
+    <div class="reaction-row">
+      <div class="reaction-header">
         <div class="reaction-num">2</div>
-        <div>
-          <div class="reaction-eq">CaO + H₂O → Ca(OH)₂</div>
-        </div>
         <div class="reaction-label">Гашение извести</div>
       </div>
-      <div class="reaction-row" style="border-color:rgba(74,240,196,0.3); background:rgba(74,240,196,0.03);">
-        <div class="reaction-num" style="opacity:1">3</div>
-        <div>
-          <div class="reaction-eq">NaCl + NH₃ + CO₂ + H₂O → NH₄Cl + NaHCO₃</div>
-        </div>
-        <div class="reaction-label">Карбонизация<br><small style="color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;">КЛЮЧЕВАЯ</small></div>
+      <div class="reaction-eq">CaO + H&#8322;O &#8594; Ca(OH)&#8322;</div>
+    </div>
+    <div class="reaction-row key">
+      <div class="reaction-header">
+        <div class="reaction-num">3</div>
+        <div class="reaction-label"><span class="key-badge">КЛЮЧЕВАЯ</span> Карбонизация</div>
       </div>
-      <div class="reaction-row">
+      <div class="reaction-eq">NaCl + NH&#8323; + CO&#8322; + H&#8322;O &#8594;<br>NH&#8324;Cl + NaHCO&#8323;</div>
+    </div>
+    <div class="reaction-row">
+      <div class="reaction-header">
         <div class="reaction-num">4</div>
-        <div>
-          <div class="reaction-eq">Ca(OH)₂ + 2NH₄Cl → 2NH₃ + CaCl₂ + H₂O</div>
-        </div>
-        <div class="reaction-label">Регенерация NH₃</div>
+        <div class="reaction-label">Регенерация NH&#8323;</div>
       </div>
-      <div class="reaction-row">
+      <div class="reaction-eq">Ca(OH)&#8322; + 2NH&#8324;Cl &#8594;<br>2NH&#8323; + CaCl&#8322; + H&#8322;O</div>
+    </div>
+    <div class="reaction-row">
+      <div class="reaction-header">
         <div class="reaction-num">5</div>
-        <div>
-          <div class="reaction-eq">2NaHCO₃ → Na₂CO₃ + H₂O + CO₂</div>
-        </div>
-        <div class="reaction-label">Кальцинация<br><small style="color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;">→ конечный продукт</small></div>
+        <div class="reaction-label">Кальцинация &#8594; Na&#8322;CO&#8323;</div>
       </div>
-      <div class="reaction-row">
+      <div class="reaction-eq">2NaHCO&#8323; &#8594; Na&#8322;CO&#8323; + H&#8322;O + CO&#8322;</div>
+    </div>
+    <div class="reaction-row">
+      <div class="reaction-header">
         <div class="reaction-num">6</div>
-        <div>
-          <div class="reaction-eq">CaCl₂ + Na₂CO₃ → CaCO₃↓ + 2NaCl</div>
-        </div>
-        <div class="reaction-label">Очистка рассола<br><small>удаление Ca²⁺</small></div>
+        <div class="reaction-label">Очистка рассола от Ca&#178;&#8314;</div>
       </div>
-      <div class="reaction-row">
+      <div class="reaction-eq">CaCl&#8322; + Na&#8322;CO&#8323; &#8594; CaCO&#8323;&#8595; + 2NaCl</div>
+    </div>
+    <div class="reaction-row">
+      <div class="reaction-header">
         <div class="reaction-num">7</div>
-        <div>
-          <div class="reaction-eq">MgCl₂ + Ca(OH)₂ → Mg(OH)₂↓ + CaCl₂</div>
+        <div class="reaction-label">Очистка рассола от Mg&#178;&#8314;</div>
+      </div>
+      <div class="reaction-eq">MgCl&#8322; + Ca(OH)&#8322; &#8594; Mg(OH)&#8322;&#8595; + CaCl&#8322;</div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGES -->
+<section id="stages">
+  <div class="section-header">
+    <span class="section-num">// 04</span>
+    <h2 class="section-title">Стадии процесса</h2>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:0.18em;margin-bottom:14px;">ОСНОВНЫЕ СТАДИИ</div>
+
+  <div class="stages-scroll">
+    <div class="stage-block">
+      <span class="stage-icon">⚗️</span>
+      <div class="stage-num">01–02</div>
+      <div class="stage-name">Аммонизация рассола</div>
+      <div class="stage-rxn">Абсорбция NH&#8323;</div>
+      <span class="badge badge-main">Осн.</span>
+      <div class="stage-arrow">&#8594;</div>
+    </div>
+    <div class="stage-block">
+      <span class="stage-icon">💨</span>
+      <div class="stage-num">02</div>
+      <div class="stage-name">Карбонизация</div>
+      <div class="stage-rxn">Реакция (3)</div>
+      <span class="badge badge-main">Осн.</span>
+      <div class="stage-arrow">&#8594;</div>
+    </div>
+    <div class="stage-block">
+      <span class="stage-icon">🔬</span>
+      <div class="stage-num">03</div>
+      <div class="stage-name">Фильтрация</div>
+      <div class="stage-rxn">NaHCO&#8323;/NH&#8324;Cl</div>
+      <span class="badge badge-main">Осн.</span>
+      <div class="stage-arrow">&#8594;</div>
+    </div>
+    <div class="stage-block">
+      <span class="stage-icon">🔥</span>
+      <div class="stage-num">04</div>
+      <div class="stage-name">Кальцинация</div>
+      <div class="stage-rxn">Реакция (5)</div>
+      <span class="badge badge-main">Осн.</span>
+    </div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent2);letter-spacing:0.18em;margin:22px 0 14px;">ВСПОМОГАТЕЛЬНЫЕ СТАДИИ</div>
+
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        <div class="acc-head-left">
+          <span class="acc-badge">Всп. 1</span>
+          <span class="acc-title">Обжиг известняка</span>
         </div>
-        <div class="reaction-label">Очистка рассола<br><small>удаление Mg²⁺</small></div>
+        <span class="acc-chevron">&#9660;</span>
+      </div>
+      <div class="acc-body"><div class="acc-body-inner">Получение CO&#8322; и CaO из CaCO&#8323; в известково-обжигательных печах. <strong>Реакция (1).</strong></div></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        <div class="acc-head-left">
+          <span class="acc-badge">Всп. 2</span>
+          <span class="acc-title">Гашение извести</span>
+        </div>
+        <span class="acc-chevron">&#9660;</span>
+      </div>
+      <div class="acc-body"><div class="acc-body-inner">Приготовление известкового молока Ca(OH)&#8322; для регенерации аммиака. <strong>Реакция (2).</strong></div></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        <div class="acc-head-left">
+          <span class="acc-badge">Всп. 3</span>
+          <span class="acc-title">Регенерация NH&#8323;</span>
+        </div>
+        <span class="acc-chevron">&#9660;</span>
+      </div>
+      <div class="acc-body"><div class="acc-body-inner">Взаимодействие NH&#8324;Cl с известковым молоком Ca(OH)&#8322;. <strong>Реакция (4).</strong> Аммиак возвращается в цикл.</div></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        <div class="acc-head-left">
+          <span class="acc-badge">Всп. 4</span>
+          <span class="acc-title">Очистка рассола</span>
+        </div>
+        <span class="acc-chevron">&#9660;</span>
+      </div>
+      <div class="acc-body"><div class="acc-body-inner">Удаление Ca&#178;&#8314; и Mg&#178;&#8314; обработкой Na&#8322;CO&#8323; и Ca(OH)&#8322;. <strong>Реакции (6) и (7).</strong></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEMA -->
+<section id="schema">
+  <div class="section-header">
+    <span class="section-num">// 05</span>
+    <h2 class="section-title">Схема цикла</h2>
+  </div>
+  <div class="info-block">
+    <strong>Замкнутый цикл.</strong> NH&#8323; не расходуется — регенерируется из маточного раствора. CO&#8322; из кальцинации и известковых печей возвращается в карбонизацию.
+  </div>
+  <div style="margin-top:16px;">
+    <div class="cycle-step">
+      <div class="cycle-n">1</div>
+      <div class="cycle-text">
+        <h4>Добыча и очистка рассола NaCl</h4>
+        <p>Выщелачивание каменной соли. Очистка от Ca&#178;&#8314; и Mg&#178;&#8314; (реакции 6, 7). T = 17°C.</p>
       </div>
     </div>
-  </section>
-
-  <!-- STAGES -->
-  <section id="stages">
-    <div class="section-header">
-      <span class="section-num">// 04</span>
-      <h2 class="section-title">Стадии процесса</h2>
-    </div>
-
-    <div style="margin-bottom:40px;">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.2em;margin-bottom:20px;">ОСНОВНЫЕ СТАДИИ</div>
-      <div class="stages-flow">
-        <div class="stage-block">
-          <div class="stage-inner">
-            <span class="stage-icon">⚗️</span>
-            <div class="stage-num">СТАДИЯ 1–2</div>
-            <div class="stage-name">Аммонизация рассола</div>
-            <div class="stage-rxn">Абсорбция NH₃</div>
-            <span class="badge badge-main">Осн.</span>
-          </div>
-        </div>
-        <div class="stage-block">
-          <div class="stage-inner">
-            <span class="stage-icon">💨</span>
-            <div class="stage-num">СТАДИЯ 2</div>
-            <div class="stage-name">Карбонизация</div>
-            <div class="stage-rxn">Реакция (3)</div>
-            <span class="badge badge-main">Осн.</span>
-          </div>
-        </div>
-        <div class="stage-block">
-          <div class="stage-inner">
-            <span class="stage-icon">🔬</span>
-            <div class="stage-num">СТАДИЯ 3</div>
-            <div class="stage-name">Фильтрация</div>
-            <div class="stage-rxn">NaHCO₃ / NH₄Cl</div>
-            <span class="badge badge-main">Осн.</span>
-          </div>
-        </div>
-        <div class="stage-block">
-          <div class="stage-inner">
-            <span class="stage-icon">🔥</span>
-            <div class="stage-num">СТАДИЯ 4</div>
-            <div class="stage-name">Кальцинация</div>
-            <div class="stage-rxn">Реакция (5)</div>
-            <span class="badge badge-main">Осн.</span>
-          </div>
-        </div>
+    <div class="cycle-step">
+      <div class="cycle-n" style="border-color:var(--accent2);color:var(--accent2);">2</div>
+      <div class="cycle-text">
+        <h4>Аммонизация (абсорбция NH&#8323;)</h4>
+        <p>Рассол насыщается NH&#8323; из отделения дистилляции. T ≈ 60°C. Два абсорбера с охлаждением до 30°C.</p>
       </div>
     </div>
-
-    <div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:0.2em;margin-bottom:20px;">ВСПОМОГАТЕЛЬНЫЕ СТАДИИ</div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-title" style="color:var(--accent2)">Вспомогательная 1</div>
-          <h3>Обжиг известняка</h3>
-          <p>Получение CO₂ и CaO из CaCO₃ в известково-обжигательных печах. Реакция (1).</p>
-        </div>
-        <div class="card">
-          <div class="card-title" style="color:var(--accent2)">Вспомогательная 2</div>
-          <h3>Гашение извести</h3>
-          <p>Приготовление известкового молока Ca(OH)₂ для регенерации аммиака. Реакция (2).</p>
-        </div>
-        <div class="card">
-          <div class="card-title" style="color:var(--accent2)">Вспомогательная 3</div>
-          <h3>Регенерация NH₃</h3>
-          <p>Взаимодействие NH₄Cl с известковым молоком Ca(OH)₂. Реакция (4). Аммиак возвращается в цикл.</p>
-        </div>
-        <div class="card">
-          <div class="card-title" style="color:var(--accent2)">Вспомогательная 4</div>
-          <h3>Очистка рассола</h3>
-          <p>Удаление Ca²⁺ и Mg²⁺ из рассола обработкой Na₂CO₃ и Ca(OH)₂. Реакции (6) и (7).</p>
-        </div>
+    <div class="cycle-step">
+      <div class="cycle-n">3</div>
+      <div class="cycle-text">
+        <h4>Карбонизация &#8594; NaHCO&#8323;</h4>
+        <p>Насыщение CO&#8322; (реакция 3). NaHCO&#8323; выпадает в осадок. Серия из 4 колонн.</p>
       </div>
     </div>
-  </section>
-
-  <!-- CYCLE SCHEMA -->
-  <section id="schema">
-    <div class="section-header">
-      <span class="section-num">// 05</span>
-      <h2 class="section-title">Принципиальная схема</h2>
-    </div>
-
-    <div class="info-block">
-      <strong>Замкнутый цикл.</strong> Аммиак не расходуется — он регенерируется из маточного раствора. CO₂ из кальцинации и известковых печей повторно используется в карбонизации.
-    </div>
-
-    <div class="flow-list" style="margin-top:32px;">
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner"></div></div>
-        <div class="flow-content">
-          <h4>1. Добыча и очистка рассола NaCl</h4>
-          <p>Рассол получают выщелачиванием каменной соли. Очищают от Ca²⁺ и Mg²⁺ (реакции 6, 7). T = 17°C.</p>
-        </div>
-      </div>
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner" style="background:var(--accent2)"></div></div>
-        <div class="flow-content">
-          <h4>2. Аммонизация (абсорбция NH₃)</h4>
-          <p>Очищенный рассол насыщается аммиаком из отделения дистилляции. T ≈ 60°C. Два абсорбера с промежуточным охлаждением до 30°C.</p>
-        </div>
-      </div>
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner" style="background:var(--accent)"></div></div>
-        <div class="flow-content">
-          <h4>3. Карбонизация → осадок NaHCO₃</h4>
-          <p>Аммонизированный рассол насыщается CO₂ (реакция 3). NaHCO₃ выпадает в осадок. Серия из 4 колонн, 3 работают как осадительные.</p>
-        </div>
-      </div>
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner" style="background:var(--accent3)"></div></div>
-        <div class="flow-content">
-          <h4>4. Фильтрация</h4>
-          <p>Барабанные вакуум-фильтры отделяют кристаллы NaHCO₃ от маточного раствора NH₄Cl.</p>
-        </div>
-      </div>
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner" style="background:var(--danger)"></div></div>
-        <div class="flow-content">
-          <h4>5. Кальцинация → Na₂CO₃ (готовый продукт)</h4>
-          <p>2NaHCO₃ → Na₂CO₃ + H₂O + CO₂ (реакция 5). CO₂ возвращается на карбонизацию.</p>
-        </div>
-      </div>
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner" style="background:var(--accent2)"></div></div>
-        <div class="flow-content">
-          <h4>6. Дистилляция → регенерация NH₃</h4>
-          <p>Маточный раствор NH₄Cl + Ca(OH)₂ → NH₃ (реакция 4). Аммиак возвращается на аммонизацию. CaO и CO₂ получают из обжига известняка.</p>
-        </div>
+    <div class="cycle-step">
+      <div class="cycle-n" style="border-color:var(--accent3);color:var(--accent3);">4</div>
+      <div class="cycle-text">
+        <h4>Фильтрация</h4>
+        <p>Барабанные вакуум-фильтры разделяют NaHCO&#8323; и маточный раствор NH&#8324;Cl.</p>
       </div>
     </div>
-  </section>
-
-  <!-- OBZHIG -->
-  <section id="obzhig">
-    <div class="section-header">
-      <span class="section-num">// 06</span>
-      <h2 class="section-title">Обжиг известняка</h2>
-    </div>
-
-    <div class="info-block">
-      <strong>Реакция:</strong> CaCO₃ → CaO + CO₂ − Q &nbsp;(эндотермическая, тепло подводится сжиганием топлива)
-    </div>
-
-    <div class="params-grid" style="margin:28px 0;">
-      <div class="param">
-        <div class="param-label">Начало разложения</div>
-        <div class="param-value">800 <small>°C</small></div>
-        <div class="param-note">Нижний порог реакции</div>
-      </div>
-      <div class="param">
-        <div class="param-label">Рабочая температура</div>
-        <div class="param-value">1000–1200 <small>°C</small></div>
-        <div class="param-note">Для интенсивности процесса</div>
-      </div>
-      <div class="param">
-        <div class="param-label">Концентрация CO₂ в газе</div>
-        <div class="param-value">≥40 <small>%</small></div>
-        <div class="param-note">Избыток воздуха 5%</div>
-      </div>
-      <div class="param">
-        <div class="param-label">Размер кусков известняка</div>
-        <div class="param-value">40–50 <small>мм</small></div>
-        <div class="param-note">Оптимальная фракция</div>
-      </div>
-      <div class="param">
-        <div class="param-label">Размер кусков угля</div>
-        <div class="param-value">20–80 <small>мм</small></div>
-        <div class="param-note">Топливо в шихте</div>
-      </div>
-      <div class="param">
-        <div class="param-label">Тонкодисперсный образец</div>
-        <div class="param-value">890 <small>°C</small></div>
-        <div class="param-note">Крупнокристаллический — 920°C</div>
+    <div class="cycle-step">
+      <div class="cycle-n" style="border-color:var(--danger);color:var(--danger);">5</div>
+      <div class="cycle-text">
+        <h4>Кальцинация &#8594; Na&#8322;CO&#8323; &#10003;</h4>
+        <p>Реакция (5). CO&#8322; возвращается на карбонизацию.</p>
       </div>
     </div>
-
-    <div class="defect-cards">
-      <div class="defect-card bad">
-        <div class="dc-label">// ДЕФЕКТ 1</div>
-        <h4>Недопал</h4>
-        <p>Возникает при недостаточной температуре обжига или слишком крупных кусках материала. CaCO₃ не полностью разлагается.</p>
-      </div>
-      <div class="defect-card worse">
-        <div class="dc-label">// ДЕФЕКТ 2</div>
-        <h4>Пережог</h4>
-        <p>Температура выше 1250°C. CaO переходит из активной формы в неактивную и перестаёт реагировать с водой — гашение невозможно.</p>
+    <div class="cycle-step">
+      <div class="cycle-n" style="border-color:var(--accent2);color:var(--accent2);">6</div>
+      <div class="cycle-text">
+        <h4>Дистилляция &#8594; регенерация NH&#8323;</h4>
+        <p>NH&#8324;Cl + Ca(OH)&#8322; &#8594; NH&#8323; (реакция 4). NH&#8323; возвращается на аммонизацию.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FURNACE -->
-  <section id="furnace">
-    <div class="section-header">
-      <span class="section-num">// 07</span>
-      <h2 class="section-title">Шахтная известковая печь</h2>
+<!-- OBZHIG -->
+<section id="obzhig">
+  <div class="section-header">
+    <span class="section-num">// 06</span>
+    <h2 class="section-title">Обжиг известняка</h2>
+  </div>
+  <div class="info-block">
+    <strong>Реакция:</strong> CaCO&#8323; &#8594; CaO + CO&#8322; &#8722; Q &nbsp;(эндотермическая, тепло от сжигания топлива)
+  </div>
+  <div class="params-grid" style="margin:16px 0;">
+    <div class="param">
+      <div class="param-label">Начало разложения</div>
+      <div class="param-value">800<small>°C</small></div>
+      <div class="param-note">Нижний порог</div>
     </div>
+    <div class="param">
+      <div class="param-label">Рабочая температура</div>
+      <div class="param-value">1000–1200<small>°C</small></div>
+    </div>
+    <div class="param">
+      <div class="param-label">Концентрация CO&#8322;</div>
+      <div class="param-value">&#8805;40<small>%</small></div>
+      <div class="param-note">Избыток воздуха 5%</div>
+    </div>
+    <div class="param">
+      <div class="param-label">Куски известняка</div>
+      <div class="param-value">40–50<small>мм</small></div>
+    </div>
+    <div class="param">
+      <div class="param-label">Куски угля</div>
+      <div class="param-value">20–80<small>мм</small></div>
+    </div>
+    <div class="param">
+      <div class="param-label">Тонкодисперсный</div>
+      <div class="param-value">890<small>°C</small></div>
+      <div class="param-note">Крупнокрист. — 920°C</div>
+    </div>
+  </div>
+  <div class="defect-cards">
+    <div class="defect-card bad">
+      <div class="dc-label">// ДЕФЕКТ 1</div>
+      <h4>Недопал</h4>
+      <p>Недостаточная T или крупные куски. CaCO&#8323; не разлагается полностью.</p>
+    </div>
+    <div class="defect-card worse">
+      <div class="dc-label">// ДЕФЕКТ 2</div>
+      <h4>Пережог</h4>
+      <p>T выше 1250°C. CaO переходит в неактивную форму и не реагирует с водой.</p>
+    </div>
+  </div>
+</section>
 
-    <p style="color:var(--muted);margin-bottom:28px;">Шихта (смесь известняка с коксом) движется сверху вниз, газы — снизу вверх (принцип противотока). Печь делится на три тепловые зоны.</p>
-
-    <div class="zones">
-      <div class="zone-row">
-        <div class="zone-indicator top">↓</div>
-        <div class="zone-name">
+<!-- FURNACE -->
+<section id="furnace">
+  <div class="section-header">
+    <span class="section-num">// 07</span>
+    <h2 class="section-title">Шахтная известковая печь</h2>
+  </div>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">Шихта (известняк + кокс) &#8595; сверху вниз, газы &#8593; снизу вверх (противоток). Три тепловые зоны:</p>
+  <div class="zones">
+    <div class="zone-card">
+      <div class="zone-head top">
+        <div class="zone-head-left">
           <strong>Зона подогрева</strong>
-          <small>Верхняя часть</small>
+          <small>&#8595; Верхняя часть</small>
         </div>
-        <div class="zone-desc">Подсушка сырья и топлива. Нагрев шихты горючими газами, движущимися противотоком из зоны обжига. На границе зон — начало разложения CaCO₃.</div>
-        <div class="zone-temp">
-          <span class="temp-val">800–1000</span>
-          <small>°C на границе</small>
-        </div>
+        <div class="zone-temp-val">800–1000<br><span style="font-size:12px">°C</span></div>
       </div>
-      <div class="zone-row">
-        <div class="zone-indicator mid">⚡</div>
-        <div class="zone-name">
+      <div class="zone-body">Подсушка сырья и нагрев шихты горючими газами из зоны обжига (противоток). На границе — начало разложения CaCO&#8323;.</div>
+    </div>
+    <div class="zone-card">
+      <div class="zone-head mid">
+        <div class="zone-head-left">
           <strong>Зона обжига</strong>
-          <small>Средняя часть</small>
+          <small>&#9889; Средняя часть</small>
         </div>
-        <div class="zone-desc">Горение топлива + разложение CaCO₃ → CaO + CO₂. В нижней части зоны горение продолжается, тепло расходуется на нагрев воздуха из зоны охлаждения.</div>
-        <div class="zone-temp">
-          <span class="temp-val">1100–1200</span>
-          <small>°C в конце зоны</small>
-        </div>
+        <div class="zone-temp-val">1100–1200<br><span style="font-size:12px">°C</span></div>
       </div>
-      <div class="zone-row">
-        <div class="zone-indicator bot">↑</div>
-        <div class="zone-name">
+      <div class="zone-body">Горение топлива + разложение CaCO&#8323; &#8594; CaO + CO&#8322;. В нижней части тепло расходуется на нагрев воздуха.</div>
+    </div>
+    <div class="zone-card">
+      <div class="zone-head bot">
+        <div class="zone-head-left">
           <strong>Зона охлаждения</strong>
-          <small>Нижняя часть</small>
+          <small>&#8593; Нижняя часть</small>
         </div>
-        <div class="zone-desc">Охлаждение готового CaO воздухом, поступающим снизу. Воздух нагревается и поднимается в зону обжига.</div>
-        <div class="zone-temp">
-          <span class="temp-val">↓</span>
-          <small>Охлаждение CaO</small>
-        </div>
+        <div class="zone-temp-val">&#8595;<br><span style="font-size:12px">CaO</span></div>
+      </div>
+      <div class="zone-body">Охлаждение готового CaO воздухом снизу. Воздух нагревается и поднимается в зону обжига.</div>
+    </div>
+  </div>
+  <div class="info-block">
+    <strong>Выгрузка и гашение.</strong> CaO &#8594; ковшевый транспортёр &#8594; бункеры &#8594; гаситель. Гашение: <strong>20–25 мин</strong>, вода <strong>60–80°C</strong>.
+  </div>
+</section>
+
+<!-- ABSORPTION -->
+<section id="absorption">
+  <div class="section-header">
+    <span class="section-num">// 08</span>
+    <h2 class="section-title">Аммонизация рассола</h2>
+  </div>
+  <div class="info-block">
+    <strong>Назначение:</strong> насытить рассол NH&#8323; из отделения дистилляции и передать на карбонизацию.
+  </div>
+  <div class="params-grid" style="margin:16px 0;">
+    <div class="param">
+      <div class="param-label">T в абсорбере</div>
+      <div class="param-value">~60<small>°C</small></div>
+    </div>
+    <div class="param">
+      <div class="param-label">Охлаждение между ступенями</div>
+      <div class="param-value">30<small>°C</small></div>
+    </div>
+    <div class="param" style="grid-column:1/-1;">
+      <div class="param-label">Число ступеней абсорбции</div>
+      <div class="param-value">2</div>
+      <div class="param-note">С промежуточным охлаждением в оросительном холодильнике</div>
+    </div>
+  </div>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:10px;">Ключевая реакция при аммонизации:</p>
+  <div class="reaction-row" style="margin-bottom:16px;">
+    <div class="reaction-header">
+      <div class="reaction-num" style="font-size:14px;opacity:0.7;">—</div>
+      <div class="reaction-label">Образование карбамата</div>
+    </div>
+    <div class="reaction-eq">2NH&#8323; + CO&#8322; &#8594; NH&#8322;COONH&#8324;</div>
+  </div>
+  <div class="grid-1">
+    <div class="card">
+      <div class="card-title">Поток рассола — 75%</div>
+      <h3>Через промыватели фильтров</h3>
+      <p>Промыватель воздуха фильтров (4) &#8594; промыватель газа (7). Поглощается NH&#8323; из воздуха вакуум-фильтров и газов карбонизации.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Поток рассола — 25%</div>
+      <h3>Через промыватель абсорбции</h3>
+      <p>Промыватель газа абсорбции (1). Поглощается NH&#8323; из выхлопных газов + часть CO&#8322;.</p>
+    </div>
+  </div>
+  <div class="info-block">
+    Оба потока &#8594; <strong>два абсорбера (13 и 14) последовательно</strong>, газ движется противотоком. После 1-го абсорбера рассол охлаждается с 65°C до 30°C, затем — 2-й абсорбер.
+  </div>
+</section>
+
+<!-- CARBONIZATION -->
+<section id="carbonization">
+  <div class="section-header">
+    <span class="section-num">// 09</span>
+    <h2 class="section-title">Карбонизация</h2>
+  </div>
+  <div class="info-block">
+    <strong>Назначение:</strong> насыщение аммонизированного рассола CO&#8322; &#8594; кристаллизация NaHCO&#8323; (реакция 3).
+  </div>
+  <p style="color:var(--muted);font-size:13px;margin:16px 0 10px;">Процесс протекает ступенчато:</p>
+  <div class="reactions" style="margin-bottom:16px;">
+    <div class="reaction-row">
+      <div class="reaction-header">
+        <div class="reaction-num" style="font-size:16px;">I</div>
+        <div class="reaction-label">CO&#8322; + NH&#8323; &#8594; карбамат</div>
+      </div>
+      <div class="reaction-eq">2NH&#8323; + CO&#8322; &#8594; NH&#8322;COONH&#8324;</div>
+    </div>
+    <div class="reaction-row">
+      <div class="reaction-header">
+        <div class="reaction-num" style="font-size:16px;">II</div>
+        <div class="reaction-label">Гидролиз карбамата</div>
+      </div>
+      <div class="reaction-eq">NH&#8322;COONH&#8324; + H&#8322;O &#8594;<br>NH&#8324;HCO&#8323; + NH&#8323;</div>
+    </div>
+    <div class="reaction-row">
+      <div class="reaction-header">
+        <div class="reaction-num" style="font-size:16px;">III</div>
+        <div class="reaction-label">Кристаллизация NaHCO&#8323;</div>
+      </div>
+      <div class="reaction-eq">NH&#8324;HCO&#8323; + NaCl &#8594;<br>NH&#8324;Cl + NaHCO&#8323;&#8595;</div>
+    </div>
+  </div>
+  <div class="grid-1" style="margin-bottom:16px;">
+    <div class="card">
+      <div class="card-title">Конструкция колонны</div>
+      <h3>Барботажный аппарат</h3>
+      <p>Чугунные царги с колпачковыми тарелками (один колпачок). Встроенные холодильники внизу.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Два ввода газа</div>
+      <h3>Смешанный + печной</h3>
+      <p><strong>Низ:</strong> смешанный газ 70–80% CO&#8322;.<br><strong>Середина (10–12 м):</strong> печной газ 40% CO&#8322;.</p>
+    </div>
+  </div>
+  <div class="params-grid">
+    <div class="param">
+      <div class="param-label">Колонн в серии</div>
+      <div class="param-value">4</div>
+      <div class="param-note">3 осадит. + 1 промывка</div>
+    </div>
+    <div class="param">
+      <div class="param-label">Промывка</div>
+      <div class="param-value">22–24<small>ч</small></div>
+    </div>
+    <div class="param" style="grid-column:1/-1;">
+      <div class="param-label">Карбонизация</div>
+      <div class="param-value">~20<small>сут</small></div>
+    </div>
+  </div>
+  <div class="warn-block">
+    <strong>Степень карбонизации</strong> — число н.д. CO&#8322;, поглощённых на 1 н.д. NH&#8323; в растворе. Ключевой технологический параметр.
+  </div>
+</section>
+
+<!-- FILTRATION -->
+<section id="filtration">
+  <div class="section-header">
+    <span class="section-num">// 10</span>
+    <h2 class="section-title">Фильтрация суспензии</h2>
+  </div>
+  <div class="info-block">
+    <strong>Назначение:</strong> отделение кристаллов NaHCO&#8323; от маточного раствора NH&#8324;Cl на барабанных вакуум-фильтрах.
+  </div>
+  <div class="grid-1" style="margin:16px 0;">
+    <div class="card">
+      <div class="card-title" style="color:var(--accent)">После фильтрации &#8594; продукт</div>
+      <h3>Осадок NaHCO&#8323;</h3>
+      <p>Снимается с барабана, транспортёр &#8594; <strong>кальцинация</strong> (реакция 5).</p>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--accent2)">После фильтрации &#8594; рецикл</div>
+      <h3>Маточный раствор NH&#8324;Cl</h3>
+      <p>Насосом &#8594; <strong>дистилляция</strong> для регенерации NH&#8323; (реакция 4).</p>
+    </div>
+  </div>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:14px;">Схема работы отделения:</p>
+  <div class="flow-list">
+    <div class="flow-item">
+      <div class="flow-dot"><div class="flow-dot-inner"></div></div>
+      <div class="flow-content">
+        <h4>Суспензия &#8594; ёмкость (1)</h4>
+        <p>Подаётся с небольшим избытком для поддержания постоянного уровня в корыте.</p>
       </div>
     </div>
-
-    <div class="info-block" style="margin-top:24px;">
-      <strong>Выгрузка и гашение.</strong> Образовавшийся CaO непрерывно выгружается ковшевым транспортёром → бункеры → гаситель. Гашение: <strong>20–25 минут</strong>, температура воды <strong>60–80°C</strong>. Температура воды влияет на скорость и полноту гидратации.
-    </div>
-  </section>
-
-  <!-- ABSORPTION -->
-  <section id="absorption">
-    <div class="section-header">
-      <span class="section-num">// 08</span>
-      <h2 class="section-title">Аммонизация рассола</h2>
-    </div>
-
-    <div class="info-block">
-      <strong>Назначение:</strong> получить аммонизированный рассол с необходимой концентрацией NH₃ и передать его в отделение карбонизации.
-    </div>
-
-    <div class="params-grid" style="margin:28px 0;">
-      <div class="param">
-        <div class="param-label">Температура в абсорбере</div>
-        <div class="param-value">~60 <small>°C</small></div>
-      </div>
-      <div class="param">
-        <div class="param-label">Охлаждение между ступенями</div>
-        <div class="param-value">30 <small>°C</small></div>
-      </div>
-      <div class="param">
-        <div class="param-label">Число ступеней абсорбции</div>
-        <div class="param-value">2</div>
-        <div class="param-note">С промежуточным охлаждением</div>
+    <div class="flow-item">
+      <div class="flow-dot"><div class="flow-dot-inner"></div></div>
+      <div class="flow-content">
+        <h4>Корыто вакуум-фильтров (2)</h4>
+        <p>Количество регулируется дроссельными заслонками. Барабанные фильтры разделяют осадок и фильтрат.</p>
       </div>
     </div>
-
-    <p style="color:var(--muted); margin-bottom:20px; font-size:14px;">Ключевая реакция при аммонизации — образование карбамата аммония, который снижает равновесное давление NH₃ над раствором и ускоряет поглощение:</p>
-
-    <div class="reaction-row" style="max-width:600px;margin-bottom:28px;">
-      <div class="reaction-num">—</div>
-      <div class="reaction-eq">2NH₃ + CO₂ → NH₂COONH₄ (карбамат аммония)</div>
-      <div></div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-title">Поток рассола — 75%</div>
-        <h3>Через промыватели фильтров</h3>
-        <p>Промыватель воздуха фильтров (4) → промыватель газа (7). Поглощается NH₃ из воздуха вакуум-фильтров и из отходящих газов карбонизации.</p>
-      </div>
-      <div class="card">
-        <div class="card-title">Поток рассола — 25%</div>
-        <h3>Через промыватель абсорбции</h3>
-        <p>Промыватель газа абсорбции (1). Поглощается NH₃ из выхлопных газов отделения абсорбции + часть CO₂.</p>
+    <div class="flow-item">
+      <div class="flow-dot"><div class="flow-dot-inner"></div></div>
+      <div class="flow-content">
+        <h4>Сепаратор (4)</h4>
+        <p>Воздух + фильтровая жидкость разделяются. Жидкость &#8594; сборник (6) &#8594; дистилляция. Воздух &#8594; промыватель (11) &#8594; атмосфера.</p>
       </div>
     </div>
-
-    <div class="info-block" style="margin-top:24px;">
-      Оба потока сходятся → <strong>два абсорбера (13 и 14) последовательно</strong>, газ движется противотоком к рассолу. После первого абсорбера рассол охлаждается с 65°C до 30°C в оросительном холодильнике, затем поступает во второй абсорбер.
-    </div>
-  </section>
-
-  <!-- CARBONIZATION -->
-  <section id="carbonization">
-    <div class="section-header">
-      <span class="section-num">// 09</span>
-      <h2 class="section-title">Карбонизация</h2>
-    </div>
-
-    <div class="info-block">
-      <strong>Назначение:</strong> насыщение аммонизированного рассола CO₂ → кристаллизация и осаждение NaHCO₃ по реакции (3).
-    </div>
-
-    <p style="color:var(--muted);font-size:14px;margin:24px 0 8px;">Процесс протекает ступенчато:</p>
-
-    <div class="reactions" style="margin-bottom:28px;">
-      <div class="reaction-row">
-        <div class="reaction-num" style="font-size:14px">I</div>
-        <div>
-          <div class="reaction-eq" style="font-size:13px">2NH₃ + CO₂ → NH₂COONH₄</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px">CO₂ реагирует с NH₃ → карбамат аммония</div>
-        </div>
-        <div></div>
-      </div>
-      <div class="reaction-row">
-        <div class="reaction-num" style="font-size:14px">II</div>
-        <div>
-          <div class="reaction-eq" style="font-size:13px">NH₂COONH₄ + H₂O → NH₄HCO₃ + NH₃</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px">Гидролиз карбамата → перенасыщенный раствор HCO₃⁻</div>
-        </div>
-        <div></div>
-      </div>
-      <div class="reaction-row">
-        <div class="reaction-num" style="font-size:14px">III</div>
-        <div>
-          <div class="reaction-eq" style="font-size:13px">NH₄HCO₃ + NaCl → NH₄Cl + NaHCO₃↓</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px">Из перенасыщенного раствора кристаллизуется NaHCO₃</div>
-        </div>
-        <div></div>
+    <div class="flow-item">
+      <div class="flow-dot"><div class="flow-dot-inner"></div></div>
+      <div class="flow-content">
+        <h4>Вакуумный сборник (7) с мешалкой</h4>
+        <p>Принимает избыток суспензии. Мешалка препятствует оседанию. Насосом возвращает в ёмкость (1).</p>
       </div>
     </div>
-
-    <div class="grid-2" style="margin-bottom:28px;">
-      <div class="card">
-        <div class="card-title">Конструкция колонны</div>
-        <h3>Барботажный аппарат</h3>
-        <p>Состоит из чугунных царг с колпачковыми тарелками (один колпачок). В нижней части — встроенные холодильники.</p>
-      </div>
-      <div class="card">
-        <div class="card-title">Два ввода газа</div>
-        <h3>Смешанный + печной</h3>
-        <p><strong>Низ:</strong> смешанный газ 70–80% CO₂.<br><strong>Середина (10–12 м):</strong> печной газ из известковых печей, 40% CO₂.</p>
+    <div class="flow-item">
+      <div class="flow-dot"><div class="flow-dot-inner" style="background:var(--accent)"></div></div>
+      <div class="flow-content">
+        <h4>Промывка осадка и тканей</h4>
+        <p>Раствор из сборника (9) промывает осадок NaHCO&#8323; и регенерирует ткани. Сжатый воздух — воздуходувкой.</p>
       </div>
     </div>
-
-    <div class="params-grid">
-      <div class="param">
-        <div class="param-label">Колонн в серии</div>
-        <div class="param-value">4</div>
-        <div class="param-note">3 осадительные + 1 на промывке</div>
-      </div>
-      <div class="param">
-        <div class="param-label">Продолжительность промывки</div>
-        <div class="param-value">22–24 <small>ч</small></div>
-      </div>
-      <div class="param">
-        <div class="param-label">Продолжительность карбонизации</div>
-        <div class="param-value">~20 <small>сут</small></div>
-      </div>
-    </div>
-
-    <div class="warn-block" style="margin-top:24px;">
-      <strong>Степень карбонизации</strong> — число, показывающее, сколько н.д. CO₂ поглощено на 1 н.д. NH₃ в растворе. Является ключевым технологическим параметром процесса.
-    </div>
-  </section>
-
-  <!-- FILTRATION -->
-  <section id="filtration">
-    <div class="section-header">
-      <span class="section-num">// 10</span>
-      <h2 class="section-title">Фильтрация суспензии</h2>
-    </div>
-
-    <div class="info-block">
-      <strong>Назначение:</strong> отделение кристаллов NaHCO₃ от маточного раствора NH₄Cl с помощью барабанных вакуум-фильтров.
-    </div>
-
-    <div class="grid-2" style="margin:28px 0;">
-      <div class="card">
-        <div class="card-title" style="color:var(--accent)">После фильтрации → продукт</div>
-        <h3>Осадок NaHCO₃</h3>
-        <p>Снимается с барабана вакуум-фильтра, поступает на транспортёр → отделение <strong>кальцинации</strong> (реакция 5).</p>
-      </div>
-      <div class="card">
-        <div class="card-title" style="color:var(--accent2)">После фильтрации → рецикл</div>
-        <h3>Маточный раствор NH₄Cl</h3>
-        <p>Из сборника насосом подаётся в отделение <strong>дистилляции</strong> для регенерации NH₃ (реакция 4).</p>
-      </div>
-    </div>
-
-    <p style="color:var(--muted);font-size:14px;margin-bottom:20px;">Схема работы отделения фильтрации:</p>
-
-    <div class="flow-list">
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner"></div></div>
-        <div class="flow-content">
-          <h4>Суспензия из карбонизационных колонн → ёмкость (1)</h4>
-          <p>Подаётся чуть больше, чем нужно фильтру, для поддержания постоянного уровня в корыте.</p>
-        </div>
-      </div>
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner"></div></div>
-        <div class="flow-content">
-          <h4>Корыто вакуум-фильтров (2)</h4>
-          <p>Количество регулируется дроссельными заслонками. Барабанные вакуум-фильтры разделяют суспензию на осадок и фильтрат.</p>
-        </div>
-      </div>
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner"></div></div>
-        <div class="flow-content">
-          <h4>Сепаратор (4)</h4>
-          <p>Смесь воздух + фильтровая жидкость разделяется. Жидкость → сборник (6) → насос (5) → дистилляция. Воздух → насос (10) → промыватель (11) → атмосфера.</p>
-        </div>
-      </div>
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner"></div></div>
-        <div class="flow-content">
-          <h4>Вакуумный сборник (7) с мешалкой</h4>
-          <p>Принимает избыток суспензии из корыта. Мешалка препятствует оседанию. Насосом возвращает суспензию в ёмкость (1).</p>
-        </div>
-      </div>
-      <div class="flow-item">
-        <div class="flow-dot"><div class="flow-dot-inner" style="background:var(--accent)"></div></div>
-        <div class="flow-content">
-          <h4>Промывка осадка и тканей</h4>
-          <p>Раствор из сборника (9) используется для промывки осадка NaHCO₃ и регенерации фильтрующих тканей. Сжатый воздух подаётся воздуходувкой.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
 </main>
 
-<!-- FOOTER -->
 <footer>
-  <p>// ТНВ · Производство кальцинированной соды · Аммиачный способ</p>
-  <p style="color:var(--accent)">Na₂CO₃</p>
+  <p>// ТНВ · Аммиачный способ</p>
+  <p style="color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11px;">Na&#8322;CO&#8323;</p>
 </footer>
 
 <script>
-  // Active nav link on scroll
-  const sections = document.querySelectorAll('section[id], .hero[id]');
-  const navLinks = document.querySelectorAll('nav a');
+function toggleAcc(head) {
+  head.closest('.acc-item').classList.toggle('open');
+}
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('active');
+const sectionEls = document.querySelectorAll('section[id]');
+const navTabs = document.querySelectorAll('.nav-tab');
+const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navTabs.forEach(t => t.classList.remove('active'));
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      const tab = document.querySelector(`.nav-tab[href="#${id}"]`);
+      const link = document.querySelector(`.sidebar a[href="#${id}"]`);
+      if (tab) {
+        tab.classList.add('active');
+        tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
-    });
-  }, { threshold: 0.3 });
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.2, rootMargin: '-5% 0px -65% 0px' });
 
-  sections.forEach(s => observer.observe(s));
+sectionEls.forEach(s => io.observe(s));
 
-  // Animate cards on scroll
-  const cards = document.querySelectorAll('.card, .reaction-row, .param, .zone-row');
-  const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.animation = 'fadeUp 0.5s ease both';
-        cardObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  cards.forEach(c => cardObserver.observe(c));
+const fadeEls = document.querySelectorAll('.card, .reaction-row, .param, .zone-card, .cycle-step, .defect-card');
+const fadeObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'fadeUp 0.4s ease both';
+      fadeObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.06 });
+fadeEls.forEach(el => fadeObs.observe(el));
 </script>
 </body>
 </html>
